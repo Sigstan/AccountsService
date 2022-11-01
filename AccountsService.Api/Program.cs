@@ -1,7 +1,10 @@
 using AccountsService.Api.Infrastructure.Exceptions;
 using AccountsService.Api.Infrastructure.Swagger;
 using AccountsService.Core.Repositories.Accounts;
+using AccountsService.Core.Repositories.Cashbacks;
+using AccountsService.Core.Repositories.Operations;
 using AccountsService.Core.Services.Accounts;
+using AccountsService.Core.Services.Operations;
 using AccountsService.Storage.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,9 +29,13 @@ namespace AccountsService.Api
             {
                 options.SchemaFilter<EnumSchemaFilter>();
             });
-            
-            builder.Services.AddScoped<IAccountsService, Core.Services.Accounts.AccountsService>();
+
             builder.Services.AddScoped<IAccountsRepository, AccountsRepository>();
+            builder.Services.AddScoped<ICashbacksRepository, CashbacksRepository>();
+            builder.Services.AddScoped<IOperationsRepository, OperationsRepository>();
+
+            builder.Services.AddScoped<IAccountsService, Core.Services.Accounts.AccountsService>();
+            builder.Services.AddScoped<IOperationsService, OperationsService>();
 
             builder.Services.AddMvc(config =>
                 config.Filters.Add(typeof(DomainExceptionFilter)));
@@ -51,7 +58,6 @@ namespace AccountsService.Api
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

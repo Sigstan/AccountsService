@@ -4,6 +4,7 @@ using AccountsService.Storage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccountsService.Storage.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221101133521_CreateOperationsTable")]
+    partial class CreateOperationsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace AccountsService.Storage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
 
                     b.HasData(
                         new
@@ -84,7 +86,7 @@ namespace AccountsService.Storage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CashbackConfigurations", (string)null);
+                    b.ToTable("CashbackConfigurations");
 
                     b.HasData(
                         new
@@ -127,7 +129,7 @@ namespace AccountsService.Storage.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Operations", (string)null);
+                    b.ToTable("Operations");
                 });
 
             modelBuilder.Entity("AccountsService.Storage.Entities.Operation", b =>

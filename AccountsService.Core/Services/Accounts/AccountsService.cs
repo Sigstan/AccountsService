@@ -2,6 +2,7 @@
 using AccountsService.Core.Repositories.Accounts;
 using AccountsService.Models.Accounts;
 using AccountsService.Models.Enums;
+using AccountsService.Models.Operations;
 
 namespace AccountsService.Core.Services.Accounts
 {
@@ -21,7 +22,8 @@ namespace AccountsService.Core.Services.Accounts
             return new AccountStatusModel()
             {
                 Status = account.Status,
-                AccountNumber = accountNumber
+                AccountNumber = accountNumber,
+                Id = account.Id
             };
         }
 
@@ -35,6 +37,27 @@ namespace AccountsService.Core.Services.Accounts
             var account = await GetAccountByAccountNumber(accountNumber, cancellationToken);
             account.Level = level;
             
+            await _accountsRepository.Update(account, cancellationToken);
+        }
+
+        public async Task<AccountModel> ValidateAndGetAccountForOperation(int accountNumber, OperationModel operationModel, CancellationToken cancellationToken)
+        {
+            var account = await GetAccountByAccountNumber(accountNumber, cancellationToken);
+
+            if (account.Status != AccountStatus.Open)
+                throw new DomainException(DomainErrorCode.InvalidOperation,
+                    $"Can not perform operations because account is in {account.Status} status");
+
+            if (account.Currency != operationModel.Currency)
+                throw new DomainException(DomainErrorCode.InvalidCurrency,
+                    $"Can not perform operations with {operationModel.Currency} currency");
+
+            return account;
+        }
+
+        public async Task Update(AccountModel accountModel, CancellationToken cancellationToken)
+        {
+            var account = await GetAccountByAccountNumber(accountModel.AccountNumber, cancellationToken);
             await _accountsRepository.Update(account, cancellationToken);
         }
 

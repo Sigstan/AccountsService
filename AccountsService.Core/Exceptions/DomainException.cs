@@ -4,7 +4,8 @@
     {
         NotFound = 1000,
         InvalidArgument = 1001,
-        InvalidOperation = 1002
+        InvalidOperation = 1002,
+        InvalidCurrency = 1003
     }
 
     public class DomainException : Exception

@@ -63,5 +63,15 @@ namespace AccountsService.Core.Extensions.Models
                 _ => throw new ArgumentOutOfRangeException(nameof(currency), currency, null)
             };
         }
+
+        public static Storage.Enums.OperationType ToEntity(this OperationType type)
+        {
+            return type switch
+            {
+                OperationType.Deposit => Storage.Enums.OperationType.Deposit,
+                OperationType.Payment => Storage.Enums.OperationType.Payment,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+        }
     }
 }

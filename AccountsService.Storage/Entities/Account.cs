@@ -18,5 +18,7 @@ namespace AccountsService.Storage.Entities
         [Required]
         [EnumDataType(typeof(Currency))]
         public Currency Currency { get; set; }
+
+        public List<Operation> Operations { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using AccountsService.Storage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccountsService.Storage.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221101121140_CreateCashbackConfigurationsTable")]
+    partial class CreateCashbackConfigurationsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace AccountsService.Storage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
 
                     b.HasData(
                         new
@@ -84,7 +86,7 @@ namespace AccountsService.Storage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CashbackConfigurations", (string)null);
+                    b.ToTable("CashbackConfigurations");
 
                     b.HasData(
                         new
@@ -99,51 +101,6 @@ namespace AccountsService.Storage.Migrations
                             AccountLevel = (short)1,
                             CashbackPercentange = 0m
                         });
-                });
-
-            modelBuilder.Entity("AccountsService.Storage.Entities.Operation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Amount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<short>("Currency")
-                        .HasColumnType("smallint");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<short>("Type")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("Operations", (string)null);
-                });
-
-            modelBuilder.Entity("AccountsService.Storage.Entities.Operation", b =>
-                {
-                    b.HasOne("AccountsService.Storage.Entities.Account", "Account")
-                        .WithMany("Operations")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("AccountsService.Storage.Entities.Account", b =>
-                {
-                    b.Navigation("Operations");
                 });
 #pragma warning restore 612, 618
         }

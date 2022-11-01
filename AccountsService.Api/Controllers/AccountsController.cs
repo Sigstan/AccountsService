@@ -1,6 +1,7 @@
 ﻿using AccountsService.Core.Services.Accounts;
 using AccountsService.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AccountsService.Api.Controllers
 {
@@ -22,7 +23,7 @@ namespace AccountsService.Api.Controllers
             var status = await _accountsServices.GetAccountStatus(accountNumber, cancellationToken);
             return Ok(status);
         }
-        
+
         [HttpGet]
         [Route("{accountNumber}/balance")]
         public async Task<IActionResult> GetAccountBalance(int accountNumber, CancellationToken cancellationToken)
@@ -30,10 +31,11 @@ namespace AccountsService.Api.Controllers
             var balance = await _accountsServices.GetAccountBalance(accountNumber, cancellationToken);
             return Ok(balance);
         }
-        
+
         [HttpPost]
         [Route("{accountNumber}/level")]
-        public async Task<IActionResult> SetAccountLevel(int accountNumber, AccountLevel level, CancellationToken cancellationToken)
+        public async Task<IActionResult> SetAccountLevel(int accountNumber, [FromBody] [EnumDataType(typeof(AccountLevel))] AccountLevel level,
+            CancellationToken cancellationToken)
         {
             await _accountsServices.SetAccountLevel(accountNumber, level, cancellationToken);
             return Ok();
