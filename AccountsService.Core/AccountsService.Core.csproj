@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AccountsService.Models\AccountsService.Models.csproj" />
+    <ProjectReference Include="..\AccountsService.Storage\AccountsService.Storage.csproj" />
+  </ItemGroup>
+
 </Project>
