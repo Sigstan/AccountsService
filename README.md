@@ -20,3 +20,6 @@ Database can be migrated from Package manage console, or when AccountsService.Ap
 ### Startup
 Open a terminal/command prompt and navigate to the folder in which you keep AccountsService.Api project\
 Write command dotnet run
+
+## Testing data
+There are two accounts which can be used for testing (account number: 1001 and 1002).
